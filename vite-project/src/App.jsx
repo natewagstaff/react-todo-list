@@ -1,5 +1,7 @@
 import { useState } from "react"
 import "./styles.css"
+import { NewTodoForm } from "./NewTodoForm"
+import { TodoList } from "./TodoList"
 
 export default function App() {
   const [newItem, setNewItem] = useState("")
@@ -33,31 +35,9 @@ export default function App() {
 
   return (
     <>
-    <form onSubmit={handleSubmit}className = "new-item-form">
-      <div className="form-row">
-        <label htmlFor="item">New Item</label>
-        <input type="text" id="item" value={newItem} onChange={(e) => setNewItem(e.target.value)} />
-      </div>
-      <button className="btn">Add</button>
-
-    </form>
+    <NewTodoForm onSubmit={addTodo} />
     <h1 className="header">Todo List</h1>
-    <ul className="list">
-      {todos.length === 0 && "No Todos"}
-      {todos.map(todo => {
-        return  ( 
-          <li className="list-item" key={todo.id}>
-            <label>
-              <input type="checkbox" checked={todo.completed} 
-              onChange={e => toggleTodo(todo.id, e.target.checked)} />
-              <span>{todo.title}</span>
-            </label>
-            <button onClick={() => deleteTodo(todo.id)} className="btn btn-danger">Delete</button>
-        </li>
-        )
-      })
-      }
-    </ul>
+    <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
   </>
   )
 }
